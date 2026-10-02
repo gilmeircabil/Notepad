@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import ProfileInfo from "../Cards/ProfileInfo";
 import Searchbar from "../Searchbar/Searchbar";
 import { useNavigate } from "react-router-dom";
@@ -26,7 +26,6 @@ const Navbar = ({
     } catch (error) {
       console.error("Logout error", error);
     } finally {
-      localStorage.removeItem("token");
       localStorage.removeItem("userInfo");
       navigate("/login");
     }
@@ -38,13 +37,24 @@ const Navbar = ({
     }
   };
 
+  // Debounce search to reduce unnecessary re-renders
+  const debounceTimerRef = useRef(null);
+
   const handleInputChange = (e) => {
     const val = e.target.value;
     setSearchQuery(val);
-    if (onSearchNote) {
-      onSearchNote(val); // Live instant search!
-    }
+    if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+    debounceTimerRef.current = setTimeout(() => {
+      if (onSearchNote) onSearchNote(val);
+    }, 200);
   };
+
+  // Cleanup debounce timer on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+    };
+  }, []);
 
   const onClear = () => {
     setSearchQuery("");

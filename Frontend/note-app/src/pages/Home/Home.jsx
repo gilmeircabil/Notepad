@@ -107,7 +107,6 @@ const Home = () => {
         localStorage.setItem("userInfo", JSON.stringify(response.data.user));
       }
     } catch (error) {
-      localStorage.removeItem("token");
       localStorage.removeItem("userInfo");
       navigate("/login");
     }

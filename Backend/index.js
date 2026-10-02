@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import cookieParser from "cookie-parser";
+import rateLimit from "express-rate-limit";
 
 import { authenticateToken } from "./utilities.js";
 import User from "./models/user.model.js";
@@ -13,8 +14,27 @@ import Note from "./models/note.model.js";
 dotenv.config();
 const app = express();
 
-app.use(express.json());
+app.use(express.json({ limit: "100kb" }));
 app.use(cookieParser());
+
+// ── RATE LIMITING (Guardrails) ──────────────────────────────
+const globalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: parseInt(process.env.RATE_LIMIT_GLOBAL_MAX || "200", 10),
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: true, message: "Too many requests, please try again later." },
+});
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: parseInt(process.env.RATE_LIMIT_AUTH_MAX || "20", 10),
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: true, message: "Too many authentication attempts. Please wait 15 minutes." },
+});
+
+app.use(globalLimiter);
 
 // Allow localhost for development as well as production Render URL
 const allowedOrigins = [
@@ -33,7 +53,7 @@ app.use(
       if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== "production") {
         return callback(null, true);
       }
-      return callback(null, true);
+      return callback(new Error("CORS: origin not allowed"), false);
     },
     credentials: true,
   })
@@ -56,12 +76,16 @@ app.get("/", (req, res) => {
 });
 
 // REGISTER
-app.post("/create-account", async (req, res) => {
+app.post("/create-account", authLimiter, async (req, res) => {
   try {
     const { fullName, email, password } = req.body;
 
     if (!fullName || !email || !password) {
       return res.status(400).json({ error: true, message: "All fields are required" });
+    }
+
+    if (password.length < 8) {
+      return res.status(400).json({ error: true, message: "Password must be at least 8 characters" });
     }
 
     const exists = await User.findOne({ email: email.toLowerCase() });
@@ -98,7 +122,7 @@ app.post("/create-account", async (req, res) => {
 });
 
 // LOGIN
-app.post("/login", async (req, res) => {
+app.post("/login", authLimiter, async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -262,16 +286,20 @@ app.post("/duplicate-note/:id", authenticateToken, async (req, res) => {
   }
 });
 
+// Escape special regex characters to prevent ReDoS attacks
+const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
 // SEARCH NOTES
 app.get("/search-notes", authenticateToken, async (req, res) => {
   try {
     const query = req.query.query || "";
+    const safeQuery = escapeRegex(query);
     const notes = await Note.find({
       userId: req.user._id,
       $or: [
-        { title: { $regex: query, $options: "i" } },
-        { content: { $regex: query, $options: "i" } },
-        { tags: { $regex: query, $options: "i" } },
+        { title: { $regex: safeQuery, $options: "i" } },
+        { content: { $regex: safeQuery, $options: "i" } },
+        { tags: { $regex: safeQuery, $options: "i" } },
       ],
     }).sort({ isPinned: -1, updatedOn: -1, createdOn: -1 });
 

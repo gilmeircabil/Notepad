@@ -58,19 +58,11 @@ const Signup = () => {
         password,
       });
 
-      if (response.data?.accessToken) {
-        localStorage.setItem("token", response.data.accessToken);
-      }
       if (response.data?.user) {
         localStorage.setItem("userInfo", JSON.stringify(response.data.user));
       }
 
-      // If token obtained, proceed straight to home!
-      if (response.data?.accessToken) {
-        navigate("/home");
-      } else {
-        navigate("/login");
-      }
+      navigate("/home");
     } catch (err) {
       setError(err.response?.data?.message || "Failed to create account. Please try again.");
     } finally {

@@ -36,15 +36,10 @@ const Login = () => {
         password,
       });
 
-      if (response.data?.accessToken) {
-        localStorage.setItem("token", response.data.accessToken);
-      }
       if (response.data?.user) {
         localStorage.setItem("userInfo", JSON.stringify(response.data.user));
       }
 
-      // Verify and fetch user
-      await axiosInstance.get("/get-user");
       navigate("/home");
     } catch (err) {
       if (err.response?.data?.message) {
@@ -80,18 +75,13 @@ const Login = () => {
         });
       }
 
-      if (response?.data?.accessToken) {
-        localStorage.setItem("token", response.data.accessToken);
-      }
       if (response?.data?.user) {
         localStorage.setItem("userInfo", JSON.stringify(response.data.user));
       }
 
-      await axiosInstance.get("/get-user");
       navigate("/home");
     } catch (err) {
       // If server unreachable, proceed in guest offline demo mode
-      localStorage.setItem("token", "demo_offline_token");
       localStorage.setItem(
         "userInfo",
         JSON.stringify({ fullName: "Demo Explorer", email: "demo@notepad.io" })
