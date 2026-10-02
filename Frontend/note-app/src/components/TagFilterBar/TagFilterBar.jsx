@@ -21,8 +21,8 @@ const TagFilterBar = ({
         }}
         className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 ${
           activeFilter === "all" && !selectedTag
-            ? "bg-blue-600 text-white shadow-md shadow-blue-500/20"
-            : "bg-white dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-700/80 border border-slate-200/80 dark:border-zinc-700/60"
+            ? "bg-blue-600 text-white"
+            : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200/80"
         }`}
       >
         <span>All Notes</span>
@@ -30,7 +30,7 @@ const TagFilterBar = ({
           className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
             activeFilter === "all" && !selectedTag
               ? "bg-blue-700/60 text-white"
-              : "bg-slate-100 dark:bg-zinc-700 text-slate-500 dark:text-zinc-400"
+              : "bg-slate-100 text-slate-500"
           }`}
         >
           {totalNotesCount}
@@ -46,8 +46,8 @@ const TagFilterBar = ({
           }}
           className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 ${
             activeFilter === "pinned" && !selectedTag
-              ? "bg-amber-500 text-white shadow-md shadow-amber-500/20"
-              : "bg-white dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-700/80 border border-slate-200/80 dark:border-zinc-700/60"
+              ? "bg-amber-500 text-white"
+              : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200/80"
           }`}
         >
           <MdPushPin className="text-sm" />
@@ -56,7 +56,7 @@ const TagFilterBar = ({
             className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
               activeFilter === "pinned" && !selectedTag
                 ? "bg-amber-600/60 text-white"
-                : "bg-slate-100 dark:bg-zinc-700 text-slate-500 dark:text-zinc-400"
+                : "bg-slate-100 text-slate-500"
           }`}
         >
           {pinnedCount}
@@ -66,7 +66,7 @@ const TagFilterBar = ({
 
       {/* Divider if tags exist */}
       {allTags.length > 0 && (
-        <span className="w-[1px] h-5 bg-slate-200 dark:bg-zinc-800 mx-1 shrink-0" />
+        <span className="w-[1px] h-5 bg-slate-200 mx-1 shrink-0" />
       )}
 
       {/* Tag Chips */}
@@ -80,8 +80,8 @@ const TagFilterBar = ({
             }}
             className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all duration-200 ${
               isSelected
-                ? "bg-indigo-600 text-white shadow-md shadow-indigo-500/20"
-                : "bg-white dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-700/80 border border-slate-200/80 dark:border-zinc-700/60"
+                ? "bg-indigo-600 text-white"
+                : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200/80"
             }`}
           >
             <FiHash className="text-[11px] opacity-70" />
@@ -90,7 +90,7 @@ const TagFilterBar = ({
               className={`text-[10px] ml-0.5 px-1.5 py-0.2 rounded-full font-bold ${
                 isSelected
                   ? "bg-indigo-700/60 text-white"
-                  : "bg-slate-100 dark:bg-zinc-700 text-slate-400 dark:text-zinc-400"
+                  : "bg-slate-100 text-slate-400"
               }`}
             >
               {count}

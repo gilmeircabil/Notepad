@@ -130,11 +130,11 @@ const AddEditNotes = ({
   };
 
   return (
-    <div className="flex flex-col h-full text-slate-800 dark:text-zinc-100">
+    <div className="flex flex-col h-full text-slate-800">
       {/* Modal Header */}
-      <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-100 dark:border-zinc-800">
+      <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
         <div className="flex items-center gap-3">
-          <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+          <h2 className="text-base sm:text-lg font-bold text-slate-900">
             {type === "edit" ? "Edit Note" : "Create New Note"}
           </h2>
 
@@ -144,8 +144,8 @@ const AddEditNotes = ({
             onClick={() => setIsPinned(!isPinned)}
             className={`flex items-center gap-1 px-2.5 py-1 rounded-xl text-xs font-semibold transition-all ${
               isPinned
-                ? "bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300"
-                : "bg-slate-100 text-slate-500 dark:bg-zinc-800 dark:text-zinc-400 hover:text-amber-600"
+                ? "bg-amber-100 text-amber-700"
+                : "bg-slate-100 text-slate-500 hover:text-amber-600"
             }`}
             title={isPinned ? "Note will be pinned" : "Pin this note"}
           >
@@ -155,7 +155,7 @@ const AddEditNotes = ({
         </div>
 
         <button
-          className="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 dark:hover:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
+          className="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
           onClick={onClose}
           title="Close (Esc)"
         >
@@ -165,7 +165,7 @@ const AddEditNotes = ({
 
       {/* Color Palette Selector */}
       <div className="flex items-center gap-2 mb-4 overflow-x-auto pb-1">
-        <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500 mr-1">
+        <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mr-1">
           Color:
         </span>
         {NOTE_COLORS.map((c) => (
@@ -173,9 +173,9 @@ const AddEditNotes = ({
             key={c.id}
             type="button"
             onClick={() => setColor(c.id)}
-            className={`w-6 h-6 rounded-full ${c.dotColor} transition-transform hover:scale-110 flex items-center justify-center ${
+            className={`w-6 h-6 rounded-full ${c.dotColor} transition-transform flex items-center justify-center ${
               color === c.id
-                ? "ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-zinc-900 scale-110"
+                ? "ring-2 ring-blue-500 ring-offset-2 scale-110"
                 : "opacity-80"
             }`}
             title={c.name}
@@ -191,18 +191,18 @@ const AddEditNotes = ({
             ref={titleInputRef}
             type="text"
             placeholder="Note Title..."
-            className="w-full text-lg sm:text-xl font-bold text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 outline-none bg-slate-50 dark:bg-zinc-800/80 px-4 py-3 rounded-2xl border border-slate-200/80 dark:border-zinc-700/60 focus:bg-white dark:focus:bg-zinc-900 focus:border-blue-500 transition-all"
+            className="w-full text-lg sm:text-xl font-bold text-slate-900 placeholder:text-slate-400 outline-none bg-slate-50 px-4 py-3 rounded-2xl border border-slate-200/80 focus:bg-white focus:border-blue-500 transition-all"
             value={title}
             onChange={({ target }) => setTitle(target.value)}
           />
         </div>
 
         {/* Formatting Shortcuts Toolbar */}
-        <div className="flex items-center gap-1.5 p-1 bg-slate-100/80 dark:bg-zinc-800/80 rounded-xl border border-slate-200/60 dark:border-zinc-700/60 overflow-x-auto">
+        <div className="flex items-center gap-1.5 p-1 bg-slate-100/80 rounded-xl border border-slate-200/60 overflow-x-auto">
           <button
             type="button"
             onClick={() => insertSnippet("\n- [ ] ")}
-            className="flex items-center gap-1 px-2.5 py-1 text-xs font-medium text-slate-600 dark:text-zinc-300 hover:bg-white dark:hover:bg-zinc-700 rounded-lg transition-colors shrink-0"
+            className="flex items-center gap-1 px-2.5 py-1 text-xs font-medium text-slate-600 hover:bg-white rounded-lg transition-colors shrink-0"
             title="Insert checklist task"
           >
             <FiCheckSquare className="text-sm text-blue-500" />
@@ -211,7 +211,7 @@ const AddEditNotes = ({
           <button
             type="button"
             onClick={() => insertSnippet("\n• ")}
-            className="flex items-center gap-1 px-2.5 py-1 text-xs font-medium text-slate-600 dark:text-zinc-300 hover:bg-white dark:hover:bg-zinc-700 rounded-lg transition-colors shrink-0"
+            className="flex items-center gap-1 px-2.5 py-1 text-xs font-medium text-slate-600 hover:bg-white rounded-lg transition-colors shrink-0"
             title="Insert bullet point"
           >
             <FiList className="text-sm text-emerald-500" />
@@ -220,7 +220,7 @@ const AddEditNotes = ({
           <button
             type="button"
             onClick={() => insertSnippet("\n### ")}
-            className="flex items-center gap-1 px-2.5 py-1 text-xs font-medium text-slate-600 dark:text-zinc-300 hover:bg-white dark:hover:bg-zinc-700 rounded-lg transition-colors shrink-0"
+            className="flex items-center gap-1 px-2.5 py-1 text-xs font-medium text-slate-600 hover:bg-white rounded-lg transition-colors shrink-0"
             title="Insert section header"
           >
             <FiType className="text-sm text-purple-500" />
@@ -229,7 +229,7 @@ const AddEditNotes = ({
           <button
             type="button"
             onClick={() => insertSnippet(`\n[${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}] `)}
-            className="flex items-center gap-1 px-2.5 py-1 text-xs font-medium text-slate-600 dark:text-zinc-300 hover:bg-white dark:hover:bg-zinc-700 rounded-lg transition-colors shrink-0"
+            className="flex items-center gap-1 px-2.5 py-1 text-xs font-medium text-slate-600 hover:bg-white rounded-lg transition-colors shrink-0"
             title="Insert timestamp"
           >
             <FiCalendar className="text-sm text-amber-500" />
@@ -243,7 +243,7 @@ const AddEditNotes = ({
             ref={textareaRef}
             rows={8}
             placeholder="Jot down notes, capture links, or brainstorm ideas..."
-            className="w-full text-xs sm:text-sm text-slate-700 dark:text-zinc-200 placeholder:text-slate-400 dark:placeholder:text-zinc-500 leading-relaxed outline-none bg-slate-50 dark:bg-zinc-800/80 p-4 rounded-2xl border border-slate-200/80 dark:border-zinc-700/60 focus:bg-white dark:focus:bg-zinc-900 focus:border-blue-500 transition-all resize-none"
+            className="w-full text-xs sm:text-sm text-slate-700 placeholder:text-slate-400 leading-relaxed outline-none bg-slate-50 p-4 rounded-2xl border border-slate-200/80 focus:bg-white focus:border-blue-500 transition-all resize-none"
             value={content}
             onChange={({ target }) => setContent(target.value)}
           />
@@ -251,7 +251,7 @@ const AddEditNotes = ({
 
         {/* Tags Section */}
         <div>
-          <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500 mb-1.5 ml-1">
+          <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 ml-1">
             Tags & Labels
           </label>
           <TagInput tags={tags} setTags={setTags} />
@@ -260,16 +260,16 @@ const AddEditNotes = ({
 
       {/* Error Message */}
       {error && (
-        <div className="mt-3 p-2.5 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/50">
-          <p className="text-red-600 dark:text-red-400 text-xs font-medium text-center">
+        <div className="mt-3 p-2.5 rounded-xl bg-red-50 border border-red-200">
+          <p className="text-red-600 text-xs font-medium text-center">
             {error}
           </p>
         </div>
       )}
 
       {/* Footer: Word count & Actions */}
-      <div className="pt-4 mt-4 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-between gap-3">
-        <span className="text-[11px] text-slate-400 dark:text-zinc-500 font-mono">
+      <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between gap-3">
+        <span className="text-[11px] text-slate-400 font-mono">
           {words} words • {chars} characters
         </span>
 
@@ -277,7 +277,7 @@ const AddEditNotes = ({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 text-xs font-semibold text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-xl transition-colors"
+            className="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors"
           >
             Cancel
           </button>
@@ -285,7 +285,7 @@ const AddEditNotes = ({
             type="button"
             disabled={isSubmitting}
             onClick={handleSubmit}
-            className="flex items-center gap-1.5 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 active:scale-95 disabled:opacity-60 text-white font-semibold text-xs rounded-xl shadow-md shadow-blue-500/25 transition-all"
+            className="flex items-center gap-1.5 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-semibold text-xs rounded-xl transition-all"
           >
             <span>{type === "edit" ? "Update Note" : "Save Note"}</span>
             <span className="hidden sm:inline-block text-[10px] bg-blue-700/60 px-1.5 py-0.5 rounded ml-1">

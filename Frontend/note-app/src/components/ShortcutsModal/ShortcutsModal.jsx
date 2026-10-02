@@ -14,24 +14,24 @@ const ShortcutsModal = ({ isOpen, onClose }) => {
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 dark:bg-black/70 backdrop-blur-sm animate-fade-in">
-      <div className="relative w-full max-w-md bg-white dark:bg-zinc-900 rounded-3xl shadow-2xl border border-slate-200/80 dark:border-zinc-800 p-6 overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-fade-in">
+      <div className="relative w-full max-w-md bg-white rounded-3xl border border-slate-200/80 p-6 overflow-hidden">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-1.5 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
+          className="absolute top-4 right-4 p-1.5 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
         >
           <FiX className="text-lg" />
         </button>
 
         <div className="flex items-center gap-3 mb-5">
-          <div className="w-10 h-10 rounded-2xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
             <FiCommand className="text-xl" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">
+            <h3 className="text-base font-bold text-slate-900">
               Keyboard Shortcuts
             </h3>
-            <p className="text-xs text-slate-400 dark:text-zinc-500">
+            <p className="text-xs text-slate-400">
               Work faster with quick keyboard commands
             </p>
           </div>
@@ -41,12 +41,12 @@ const ShortcutsModal = ({ isOpen, onClose }) => {
           {shortcuts.map(({ key, desc }) => (
             <div
               key={key}
-              className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-zinc-800/60 border border-slate-100 dark:border-zinc-800"
+              className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100"
             >
-              <span className="text-xs text-slate-600 dark:text-zinc-300">
+              <span className="text-xs text-slate-600">
                 {desc}
               </span>
-              <kbd className="px-2 py-1 text-[11px] font-mono font-medium text-slate-700 dark:text-zinc-200 bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg shadow-2xs">
+              <kbd className="px-2 py-1 text-[11px] font-mono font-medium text-slate-700 bg-white border border-slate-200 rounded-lg">
                 {key}
               </kbd>
             </div>

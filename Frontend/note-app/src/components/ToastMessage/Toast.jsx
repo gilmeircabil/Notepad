@@ -22,32 +22,32 @@ const Toast = ({ isShown, message, type = "success", onClose }) => {
       case "delete":
         return {
           barColor: "bg-red-500",
-          iconBg: "bg-red-50 dark:bg-red-950/50",
-          iconColor: "text-red-500 dark:text-red-400",
+          iconBg: "bg-red-50",
+          iconColor: "text-red-500",
           label: "Deleted",
           Icon: MdDeleteOutline,
         };
       case "error":
         return {
           barColor: "bg-rose-500",
-          iconBg: "bg-rose-50 dark:bg-rose-950/50",
-          iconColor: "text-rose-500 dark:text-rose-400",
+          iconBg: "bg-rose-50",
+          iconColor: "text-rose-500",
           label: "Error",
           Icon: MdErrorOutline,
         };
       case "info":
         return {
           barColor: "bg-blue-500",
-          iconBg: "bg-blue-50 dark:bg-blue-950/50",
-          iconColor: "text-blue-500 dark:text-blue-400",
+          iconBg: "bg-blue-50",
+          iconColor: "text-blue-500",
           label: "Notice",
           Icon: FiInfo,
         };
       default:
         return {
           barColor: "bg-emerald-500",
-          iconBg: "bg-emerald-50 dark:bg-emerald-950/50",
-          iconColor: "text-emerald-500 dark:text-emerald-400",
+          iconBg: "bg-emerald-50",
+          iconColor: "text-emerald-500",
           label: "Success",
           Icon: LuCheck,
         };
@@ -58,7 +58,7 @@ const Toast = ({ isShown, message, type = "success", onClose }) => {
 
   return (
     <div className="fixed top-20 right-4 sm:right-8 z-[100] animate-fade-in max-w-sm w-full">
-      <div className="relative bg-white dark:bg-zinc-900 border border-slate-200/80 dark:border-zinc-800 shadow-2xl rounded-2xl overflow-hidden flex items-center justify-between p-3.5 gap-3">
+      <div className="relative bg-white border border-slate-200/80 rounded-2xl overflow-hidden flex items-center justify-between p-3.5 gap-3">
         {/* Accent Bar */}
         <div className={`absolute left-0 top-0 h-full w-1.5 ${barColor}`} />
 
@@ -70,10 +70,10 @@ const Toast = ({ isShown, message, type = "success", onClose }) => {
           </div>
 
           <div className="flex flex-col flex-1 min-w-0">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
               {label}
             </span>
-            <p className="text-xs font-semibold text-slate-800 dark:text-zinc-100 truncate">
+            <p className="text-xs font-semibold text-slate-800 truncate">
               {message}
             </p>
           </div>
@@ -81,7 +81,7 @@ const Toast = ({ isShown, message, type = "success", onClose }) => {
 
         <button
           onClick={onClose}
-          className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
+          className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
         >
           <FiX className="text-sm" />
         </button>

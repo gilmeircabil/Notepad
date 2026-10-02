@@ -3,7 +3,6 @@ import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom"
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
-import { ThemeProvider } from "./context/ThemeContext";
 
 // Auth guard helper — Home verifies session via /get-user cookie check
 const ProtectedRoute = ({ children }) => {
@@ -29,9 +28,7 @@ const routes = createBrowserRouter([
 ]);
 
 const App = () => (
-  <ThemeProvider>
-    <RouterProvider router={routes} />
-  </ThemeProvider>
+  <RouterProvider router={routes} />
 );
 
 export default App;

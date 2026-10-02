@@ -317,7 +317,7 @@ const Home = () => {
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-zinc-950 text-slate-800 dark:text-zinc-100 transition-colors">
+    <div className="min-h-screen bg-slate-50 text-slate-800 transition-colors">
       {/* Top Navbar */}
       <Navbar
         userInfo={userInfo}
@@ -350,14 +350,14 @@ const Home = () => {
 
             {/* Sort Dropdown */}
             <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
-              <label className="text-xs font-semibold text-slate-400 dark:text-zinc-500 flex items-center gap-1">
+              <label className="text-xs font-semibold text-slate-400 flex items-center gap-1">
                 <FiSliders className="text-xs" />
                 <span>Sort:</span>
               </label>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="text-xs font-medium bg-white dark:bg-zinc-800 text-slate-700 dark:text-zinc-200 border border-slate-200/80 dark:border-zinc-700/60 rounded-xl px-2.5 py-1.5 outline-none focus:border-blue-500 transition-colors cursor-pointer"
+                className="text-xs font-medium bg-white text-slate-700 border border-slate-200/80 rounded-xl px-2.5 py-1.5 outline-none focus:border-blue-500 transition-colors cursor-pointer"
               >
                 <option value="updated-desc">Recently Updated</option>
                 <option value="created-desc">Newest First</option>
@@ -379,7 +379,7 @@ const Home = () => {
               <section>
                 <div className="flex items-center gap-2 mb-3 select-none">
                   <MdPushPin className="text-amber-500 text-base" />
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
                     PINNED ({pinnedNotes.length})
                   </h3>
                 </div>
@@ -414,7 +414,7 @@ const Home = () => {
               <section>
                 {pinnedNotes.length > 0 && (
                   <div className="flex items-center gap-2 mb-3 select-none">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
                       OTHER NOTES ({otherNotes.length})
                     </h3>
                   </div>
@@ -468,11 +468,11 @@ const Home = () => {
         onClick={() => {
           setOpenAddEditModal({ isShown: true, type: "add", data: null });
         }}
-        className="fixed bottom-6 right-6 md:bottom-8 md:right-8 w-14 h-14 md:w-16 md:h-16 bg-gradient-to-tr from-blue-600 to-indigo-600 text-white rounded-2xl flex items-center justify-center shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-105 active:scale-95 transition-all z-40 group"
+        className="fixed bottom-6 right-6 md:bottom-8 md:right-8 w-14 h-14 md:w-16 md:h-16 bg-gradient-to-tr from-blue-600 to-indigo-600 text-white rounded-2xl flex items-center justify-center hover: transition-all z-40 group"
         aria-label="Create note (Ctrl + N)"
         title="Create new note (Ctrl + N)"
       >
-        <MdAdd className="text-3xl sm:text-4xl transition-transform group-hover:rotate-90 duration-300" />
+        <MdAdd className="text-3xl sm:text-4xl transition-transform duration-300" />
       </button>
 
       {/* Add / Edit Note Modal */}
@@ -488,7 +488,7 @@ const Home = () => {
             zIndex: 1000,
           },
         }}
-        className="w-[94%] sm:w-[85%] md:w-[70%] lg:w-[48%] max-h-[92vh] bg-white dark:bg-zinc-900 rounded-3xl mx-auto mt-[4vh] p-6 sm:p-7 shadow-2xl border border-slate-200/80 dark:border-zinc-800 overflow-y-auto outline-none animate-fade-in"
+        className="w-[94%] sm:w-[85%] md:w-[70%] lg:w-[48%] max-h-[92vh] bg-white rounded-3xl mx-auto mt-[4vh] p-6 sm:p-7 border border-slate-200/80 overflow-y-auto outline-none animate-fade-in"
       >
         <AddEditNotes
           type={openAddEditModal.type}

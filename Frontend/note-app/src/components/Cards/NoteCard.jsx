@@ -16,7 +16,7 @@ const HighlightText = ({ text, highlight }) => {
         regex.test(part) ? (
           <mark
             key={i}
-            className="bg-yellow-200 dark:bg-yellow-500/40 text-slate-900 dark:text-yellow-100 rounded px-0.5"
+            className="bg-yellow-200 text-slate-900 rounded px-0.5"
           >
             {part}
           </mark>
@@ -84,7 +84,7 @@ const NoteCard = ({
                     className={`w-3.5 h-3.5 rounded flex items-center justify-center border text-[10px] shrink-0 ${
                       isChecked
                         ? "bg-blue-500 border-blue-500 text-white"
-                        : "border-slate-300 dark:border-zinc-600 bg-white/50 dark:bg-zinc-800"
+                        : "border-slate-300 bg-white/50"
                     }`}
                   >
                     {isChecked ? "✓" : ""}
@@ -92,8 +92,8 @@ const NoteCard = ({
                   <span
                     className={`truncate ${
                       isChecked
-                        ? "line-through text-slate-400 dark:text-zinc-500"
-                        : "text-slate-600 dark:text-zinc-300"
+                        ? "line-through text-slate-400"
+                        : "text-slate-600"
                     }`}
                   >
                     <HighlightText text={taskText} highlight={searchQuery} />
@@ -102,13 +102,13 @@ const NoteCard = ({
               );
             }
             return (
-              <p key={idx} className="text-xs text-slate-600 dark:text-zinc-300 truncate">
+              <p key={idx} className="text-xs text-slate-600 truncate">
                 <HighlightText text={line} highlight={searchQuery} />
               </p>
             );
           })}
           {lines.length > 4 && (
-            <p className="text-[11px] text-slate-400 dark:text-zinc-500 italic">
+            <p className="text-[11px] text-slate-400 italic">
               +{lines.length - 4} more items...
             </p>
           )}
@@ -117,7 +117,7 @@ const NoteCard = ({
     }
 
     return (
-      <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-300 leading-relaxed line-clamp-3 mb-3">
+      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed line-clamp-3 mb-3">
         <HighlightText text={content} highlight={searchQuery} />
       </p>
     );
@@ -128,7 +128,7 @@ const NoteCard = ({
     return (
       <div
         onClick={onEdit}
-        className={`group relative ${colorConfig.bgClass} rounded-2xl p-4 border ${colorConfig.borderClass} ${colorConfig.hoverBorder} shadow-xs hover:shadow-md transition-all duration-200 cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3`}
+        className={`group relative ${colorConfig.bgClass} rounded-2xl p-4 border ${colorConfig.borderClass} ${colorConfig.hoverBorder} hover: transition-all duration-200 cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3`}
       >
         <div className="flex-1 min-w-0 pr-2">
           <div className="flex items-center gap-2 mb-1">
@@ -140,22 +140,22 @@ const NoteCard = ({
               }}
               className={`p-1 rounded-full transition-colors ${
                 isPinned
-                  ? "text-amber-500 bg-amber-50 dark:bg-amber-950/50"
-                  : "text-slate-300 dark:text-zinc-600 hover:text-amber-500"
+                  ? "text-amber-500 bg-amber-50"
+                  : "text-slate-300 hover:text-amber-500"
               }`}
               title={isPinned ? "Unpin note" : "Pin note"}
             >
               <MdPushPin className="text-base" />
             </button>
-            <h6 className="text-sm font-semibold text-slate-900 dark:text-zinc-100 truncate">
+            <h6 className="text-sm font-semibold text-slate-900 truncate">
               <HighlightText text={title} highlight={searchQuery} />
             </h6>
-            <span className="text-[11px] text-slate-400 dark:text-zinc-500 shrink-0">
+            <span className="text-[11px] text-slate-400 shrink-0">
               • {moment(updatedOn || createdOn).fromNow()}
             </span>
           </div>
 
-          <p className="text-xs text-slate-500 dark:text-zinc-400 truncate pl-6">
+          <p className="text-xs text-slate-500 truncate pl-6">
             <HighlightText text={content} highlight={searchQuery} />
           </p>
         </div>
@@ -176,7 +176,7 @@ const NoteCard = ({
               </span>
             ))}
             {tags.length > 2 && (
-              <span className="text-[10px] text-slate-400 dark:text-zinc-500 self-center">
+              <span className="text-[10px] text-slate-400 self-center">
                 +{tags.length - 2}
               </span>
             )}
@@ -185,7 +185,7 @@ const NoteCard = ({
           <div className="flex items-center gap-1">
             <button
               onClick={handleCopy}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-slate-100 transition-colors"
               title="Copy note"
             >
               {copied ? <FiCheck className="text-emerald-500 text-sm" /> : <FiCopy className="text-sm" />}
@@ -195,7 +195,7 @@ const NoteCard = ({
                 e.stopPropagation();
                 onEdit();
               }}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-slate-100 transition-colors"
               title="Edit note"
             >
               <FaEdit className="text-sm" />
@@ -205,7 +205,7 @@ const NoteCard = ({
                 e.stopPropagation();
                 onDelete();
               }}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors"
               title="Delete note"
             >
               <FaTrash className="text-xs" />
@@ -220,21 +220,21 @@ const NoteCard = ({
   return (
     <div
       onClick={onEdit}
-      className={`group relative ${colorConfig.bgClass} rounded-2xl p-5 border ${colorConfig.borderClass} ${colorConfig.hoverBorder} shadow-xs hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer flex flex-col justify-between min-h-[190px]`}
+      className={`group relative ${colorConfig.bgClass} rounded-2xl p-5 border ${colorConfig.borderClass} ${colorConfig.hoverBorder} hover: transition-all duration-200 cursor-pointer flex flex-col justify-between min-h-[190px]`}
     >
       <div>
         {/* Card Header */}
         <div className="flex justify-between items-start mb-2 gap-2">
           <div className="flex-1 min-w-0">
-            <h6 className="text-sm sm:text-base font-bold text-slate-900 dark:text-zinc-100 leading-snug line-clamp-2">
+            <h6 className="text-sm sm:text-base font-bold text-slate-900 leading-snug line-clamp-2">
               <HighlightText text={title} highlight={searchQuery} />
             </h6>
             <div className="flex items-center gap-2 mt-1">
-              <span className="text-[11px] font-medium text-slate-400 dark:text-zinc-400">
+              <span className="text-[11px] font-medium text-slate-400">
                 {moment(updatedOn || createdOn).format("MMM D, YYYY")}
               </span>
-              <span className="text-[10px] text-slate-400 dark:text-zinc-400">•</span>
-              <span className="text-[11px] text-slate-400 dark:text-zinc-400">
+              <span className="text-[10px] text-slate-400">•</span>
+              <span className="text-[11px] text-slate-400">
                 {words} {words === 1 ? "word" : "words"}
               </span>
             </div>
@@ -249,8 +249,8 @@ const NoteCard = ({
             }}
             className={`p-1.5 rounded-xl transition-all ${
               isPinned
-                ? "bg-amber-100/80 dark:bg-amber-950/80 text-amber-600 dark:text-amber-400 shadow-xs"
-                : "text-slate-300 dark:text-zinc-600 hover:text-amber-500 hover:bg-slate-100 dark:hover:bg-zinc-800"
+                ? "bg-amber-100/80 text-amber-600"
+                : "text-slate-300 hover:text-amber-500 hover:bg-slate-100"
             }`}
             title={isPinned ? "Unpin note" : "Pin note"}
           >
@@ -263,7 +263,7 @@ const NoteCard = ({
       </div>
 
       {/* Card Footer: Tags & Quick Action Buttons */}
-      <div className="pt-3 border-t border-slate-100/80 dark:border-zinc-800/80 flex items-center justify-between gap-2 mt-auto">
+      <div className="pt-3 border-t border-slate-100/80 flex items-center justify-between gap-2 mt-auto">
         {/* Tags */}
         <div className="flex flex-wrap gap-1 max-w-[55%]">
           {tags.map((item, index) => (
@@ -291,7 +291,7 @@ const NoteCard = ({
                   e.stopPropagation();
                   setShowColorPicker(!showColorPicker);
                 }}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
+                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
                 title="Change color"
               >
                 <IoColorPaletteOutline className="text-base" />
@@ -301,7 +301,7 @@ const NoteCard = ({
               {showColorPicker && (
                 <div
                   onClick={(e) => e.stopPropagation()}
-                  className="absolute bottom-8 right-0 bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-xl rounded-2xl p-2 z-30 flex gap-1.5 animate-fade-in"
+                  className="absolute bottom-8 right-0 bg-white border border-slate-200 rounded-2xl p-2 z-30 flex gap-1.5 animate-fade-in"
                 >
                   {NOTE_COLORS.map((c) => (
                     <button
@@ -311,8 +311,8 @@ const NoteCard = ({
                         onChangeColor(c.id);
                         setShowColorPicker(false);
                       }}
-                      className={`w-5 h-5 rounded-full ${c.dotColor} hover:scale-110 transition-transform ${
-                        color === c.id ? "ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-zinc-900" : ""
+                      className={`w-5 h-5 rounded-full ${c.dotColor} transition-transform ${
+                        color === c.id ? "ring-2 ring-blue-500 ring-offset-2" : ""
                       }`}
                       title={c.name}
                     />
@@ -326,7 +326,7 @@ const NoteCard = ({
           <button
             type="button"
             onClick={handleCopy}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-slate-100 transition-colors"
             title="Copy note"
           >
             {copied ? (
@@ -344,7 +344,7 @@ const NoteCard = ({
                 e.stopPropagation();
                 onDuplicate();
               }}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors hidden sm:block"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-slate-100 transition-colors hidden sm:block"
               title="Duplicate note"
             >
               <FiLayers className="text-base" />
@@ -358,7 +358,7 @@ const NoteCard = ({
               e.stopPropagation();
               onEdit();
             }}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-slate-100 transition-colors"
             title="Edit note"
           >
             <FaEdit className="text-base" />
@@ -371,7 +371,7 @@ const NoteCard = ({
               e.stopPropagation();
               onDelete();
             }}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors"
             title="Delete note"
           >
             <FaTrash className="text-sm" />
