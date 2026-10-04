@@ -14,8 +14,14 @@ const routes = createBrowserRouter([
     path: "/",
     element: localStorage.getItem("userInfo") ? <Navigate to="/home" replace /> : <Login />,
   },
-  { path: "/login", element: <Login /> },
-  { path: "/signup", element: <Signup /> },
+  { 
+    path: "/login", 
+    element: localStorage.getItem("userInfo") ? <Navigate to="/home" replace /> : <Login /> 
+  },
+  { 
+    path: "/signup", 
+    element: localStorage.getItem("userInfo") ? <Navigate to="/home" replace /> : <Signup /> 
+  },
   {
     path: "/home",
     element: (
