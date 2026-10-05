@@ -25,6 +25,7 @@ const Navbar = ({
       console.error("Logout error", error);
     } finally {
       localStorage.removeItem("userInfo");
+      localStorage.removeItem("token");
       navigate("/login");
     }
   };

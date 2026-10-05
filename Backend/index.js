@@ -89,6 +89,7 @@ app.use(
       return callback(null, allowedOrigins.includes(origin));
     },
     credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
@@ -145,12 +146,13 @@ app.post("/create-account", authLimiter, async (req, res) => {
 
     console.info(`[auth] account created ${maskEmail(email)} ip=${req.ip}`);
 
-    // Token is only delivered as an httpOnly cookie — never in the JSON body.
-    res.cookie("accessToken", signToken(user._id), cookieOptions);
+    const token = signToken(user._id);
+    res.cookie("accessToken", token, cookieOptions);
     res.json({
       error: false,
       message: "Account created",
       user: publicUser(user),
+      accessToken: token,
     });
   } catch (error) {
     console.error("Signup error:", error);
@@ -179,11 +181,13 @@ app.post("/login", authLimiter, async (req, res) => {
 
     console.info(`[auth] login ${maskEmail(email)} ip=${req.ip}`);
 
-    res.cookie("accessToken", signToken(user._id), cookieOptions);
+    const token = signToken(user._id);
+    res.cookie("accessToken", token, cookieOptions);
     res.json({
       error: false,
       message: "Login successful",
       user: publicUser(user),
+      accessToken: token,
     });
   } catch (error) {
     console.error("Login error:", error);

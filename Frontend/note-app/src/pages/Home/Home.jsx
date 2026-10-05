@@ -107,8 +107,11 @@ const Home = () => {
         localStorage.setItem("userInfo", JSON.stringify(response.data.user));
       }
     } catch (error) {
-      localStorage.removeItem("userInfo");
-      navigate("/login");
+      if (error.response && error.response.status === 401) {
+        localStorage.removeItem("userInfo");
+        localStorage.removeItem("token");
+        navigate("/login");
+      }
     }
   };
 

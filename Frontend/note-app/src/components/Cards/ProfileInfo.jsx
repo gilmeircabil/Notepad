@@ -31,6 +31,7 @@ const ProfileInfo = ({ userInfo, onLogout, notesCount = 0, onOpenShortcuts }) =>
     try {
       await axiosInstance.delete("/delete-account");
       localStorage.removeItem("userInfo");
+      localStorage.removeItem("token");
       setShowDeleteModal(false);
       navigate("/login");
     } catch (err) {
