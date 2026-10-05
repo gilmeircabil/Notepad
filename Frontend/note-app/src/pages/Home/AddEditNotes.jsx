@@ -30,12 +30,16 @@ const AddEditNotes = ({
     }
   }, [noteData]);
 
-  // Keyboard shortcut: Ctrl/Cmd + Enter to save, Esc to close
+  // Keyboard shortcut: Ctrl/Cmd + Enter to save, Esc to close, Ctrl+D for timestamp
   useEffect(() => {
     const handleKeyDown = (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
         e.preventDefault();
         handleSubmit();
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "d") {
+        e.preventDefault();
+        insertSnippet(`\n[${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}] `);
       }
       if (e.key === "Escape") {
         onClose();
@@ -190,6 +194,7 @@ const AddEditNotes = ({
           <input
             ref={titleInputRef}
             type="text"
+            aria-label="Note Title"
             placeholder="Note Title..."
             className="w-full text-lg sm:text-xl font-bold text-slate-900 placeholder:text-slate-400 outline-none bg-slate-50 px-4 py-3 rounded-2xl border border-slate-200/80 focus:bg-white focus:border-blue-500 transition-all"
             value={title}

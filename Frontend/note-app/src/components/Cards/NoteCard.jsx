@@ -108,7 +108,7 @@ const NoteCard = ({
             );
           })}
           {lines.length > 4 && (
-            <p className="text-[11px] text-slate-400 italic">
+            <p className="text-[11px] text-slate-500 font-medium">
               +{lines.length - 4} more items...
             </p>
           )}

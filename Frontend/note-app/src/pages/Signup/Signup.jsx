@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Password from "../../components/Input/Password";
 import { validateEmail } from "../../utils/Helper";
 import axiosInstance from "../../utils/axiosInstance";
-import { FiArrowRight, FiUserCheck, FiShield } from "react-icons/fi";
+import { FiArrowRight, FiUserCheck } from "react-icons/fi";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -71,7 +71,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 transition-colors flex flex-col">
+    <div className="min-h-screen bg-slate-50 text-slate-800 transition-colors flex flex-col justify-between">
       <Navbar />
 
       <div className="flex-1 flex items-center justify-center px-4 sm:px-6 py-10 sm:py-16 relative overflow-hidden">
@@ -79,15 +79,15 @@ const Signup = () => {
         <div className="absolute top-1/4 right-1/2 translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="w-full max-w-md relative z-10">
-          <div className="bg-white rounded-3xl border border-slate-200/80 p-7 sm:p-10 animate-fade-in">
+          <div className="bg-white rounded-3xl border border-slate-200/80 p-7 sm:p-10 animate-fade-in shadow-sm">
             {/* Header */}
             <div className="text-center mb-8">
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 mb-3 shadow-inner">
                 <FiUserCheck className="text-2xl" />
               </div>
-              <h2 className="text-2xl font-bold text-slate-900">
+              <h1 className="text-2xl font-bold text-slate-900">
                 Create Account
-              </h2>
+              </h1>
               <p className="text-xs sm:text-sm text-slate-400 mt-1.5">
                 Join to organize and protect your notes in one place
               </p>
@@ -96,11 +96,17 @@ const Signup = () => {
             {/* Form */}
             <form onSubmit={handleSignup} className="space-y-4">
               <div>
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 ml-1">
+                <label
+                  htmlFor="signup-name"
+                  className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 ml-1"
+                >
                   Full Name
                 </label>
                 <input
+                  id="signup-name"
+                  name="name"
                   type="text"
+                  autoComplete="name"
                   placeholder="e.g. Alex Rivera"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -109,11 +115,17 @@ const Signup = () => {
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 ml-1">
+                <label
+                  htmlFor="signup-email"
+                  className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 ml-1"
+                >
                   Email Address
                 </label>
                 <input
+                  id="signup-email"
+                  name="email"
                   type="email"
+                  autoComplete="email"
                   placeholder="alex@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -122,10 +134,16 @@ const Signup = () => {
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 ml-1">
+                <label
+                  htmlFor="signup-password"
+                  className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 ml-1"
+                >
                   Password
                 </label>
                 <Password
+                  id="signup-password"
+                  name="password"
+                  autoComplete="new-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="At least 8 characters"
@@ -167,7 +185,7 @@ const Signup = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-semibold py-3.5 rounded-xl transition-all text-xs sm:text-sm flex items-center justify-center gap-2 mt-2"
+                className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-semibold py-3.5 rounded-xl transition-all text-xs sm:text-sm flex items-center justify-center gap-2 mt-2 cursor-pointer"
               >
                 {isLoading ? (
                   <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -179,7 +197,19 @@ const Signup = () => {
                 )}
               </button>
 
-              <p className="text-xs text-center text-slate-400 pt-4">
+              {/* Legal & Consent Notice (GDPR/Compliance) */}
+              <p className="text-[11px] text-slate-400 text-center leading-relaxed pt-2">
+                By signing up, you agree to our{" "}
+                <Link to="/terms" className="text-blue-600 hover:underline">
+                  Terms of Service
+                </Link>{" "}
+                and acknowledge our{" "}
+                <Link to="/privacy" className="text-blue-600 hover:underline">
+                  Privacy Policy
+                </Link>.
+              </p>
+
+              <p className="text-xs text-center text-slate-400 pt-3">
                 Already have an account?{" "}
                 <Link
                   to="/login"
@@ -192,6 +222,18 @@ const Signup = () => {
           </div>
         </div>
       </div>
+
+      {/* Subtle Footer Links */}
+      <footer className="py-4 text-center text-[11px] text-slate-400 border-t border-slate-200/60 bg-white/50 flex items-center justify-center gap-4">
+        <span>© {new Date().getFullYear()} NotePad</span>
+        <Link to="/privacy" className="hover:text-blue-600 transition-colors">
+          Privacy
+        </Link>
+        <span>•</span>
+        <Link to="/terms" className="hover:text-blue-600 transition-colors">
+          Terms
+        </Link>
+      </footer>
     </div>
   );
 };

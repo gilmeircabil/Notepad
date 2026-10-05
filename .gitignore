@@ -1,0 +1,12 @@
+# Secrets — never commit real env files (Security playbook B9)
+.env
+.env.*
+!.env.example
+
+# Dependencies & build output
+node_modules/
+dist/
+dist-ssr/
+
+# Logs
+*.log

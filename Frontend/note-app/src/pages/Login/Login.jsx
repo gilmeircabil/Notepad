@@ -52,9 +52,8 @@ const Login = () => {
     }
   };
 
-
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 transition-colors flex flex-col">
+    <div className="min-h-screen bg-slate-50 text-slate-800 transition-colors flex flex-col justify-between">
       <Navbar />
 
       <div className="flex-1 flex items-center justify-center px-4 sm:px-6 py-10 sm:py-16 relative overflow-hidden">
@@ -63,15 +62,15 @@ const Login = () => {
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="w-full max-w-md relative z-10">
-          <div className="bg-white rounded-3xl border border-slate-200/80 p-7 sm:p-10 animate-fade-in">
+          <div className="bg-white rounded-3xl border border-slate-200/80 p-7 sm:p-10 animate-fade-in shadow-sm">
             {/* Header */}
             <div className="text-center mb-8">
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 mb-3 shadow-inner">
                 <FiLock className="text-2xl" />
               </div>
-              <h2 className="text-2xl font-bold text-slate-900">
+              <h1 className="text-2xl font-bold text-slate-900">
                 Welcome back
-              </h2>
+              </h1>
               <p className="text-xs sm:text-sm text-slate-400 mt-1.5">
                 Sign in to manage and organize your personal notes
               </p>
@@ -80,12 +79,18 @@ const Login = () => {
             {/* Form */}
             <form onSubmit={handleLogin} className="space-y-4">
               <div>
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 ml-1">
+                <label
+                  htmlFor="login-email"
+                  className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 ml-1"
+                >
                   Email Address
                 </label>
                 <div className="relative">
                   <input
+                    id="login-email"
+                    name="email"
                     type="email"
+                    autoComplete="email"
                     placeholder="name@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -95,10 +100,24 @@ const Login = () => {
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 ml-1">
-                  Password
-                </label>
+                <div className="flex items-center justify-between mb-1.5 ml-1">
+                  <label
+                    htmlFor="login-password"
+                    className="block text-[11px] font-bold uppercase tracking-wider text-slate-400"
+                  >
+                    Password
+                  </label>
+                  <Link
+                    to="/forgot-password"
+                    className="text-[11px] font-semibold text-blue-600 hover:underline"
+                  >
+                    Forgot password?
+                  </Link>
+                </div>
                 <Password
+                  id="login-password"
+                  name="password"
+                  autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
@@ -116,7 +135,7 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-semibold py-3.5 rounded-xl transition-all text-xs sm:text-sm flex items-center justify-center gap-2 mt-2"
+                className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-semibold py-3.5 rounded-xl transition-all text-xs sm:text-sm flex items-center justify-center gap-2 mt-2 cursor-pointer"
               >
                 {isLoading ? (
                   <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -127,8 +146,6 @@ const Login = () => {
                   </>
                 )}
               </button>
-
-
 
               <p className="text-xs text-center text-slate-400 pt-4">
                 Don't have an account yet?{" "}
@@ -143,6 +160,18 @@ const Login = () => {
           </div>
         </div>
       </div>
+
+      {/* Subtle Footer Links */}
+      <footer className="py-4 text-center text-[11px] text-slate-400 border-t border-slate-200/60 bg-white/50 flex items-center justify-center gap-4">
+        <span>© {new Date().getFullYear()} NotePad</span>
+        <Link to="/privacy" className="hover:text-blue-600 transition-colors">
+          Privacy
+        </Link>
+        <span>•</span>
+        <Link to="/terms" className="hover:text-blue-600 transition-colors">
+          Terms
+        </Link>
+      </footer>
     </div>
   );
 };

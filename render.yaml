@@ -1,0 +1,39 @@
+# Render Blueprint — security headers for the frontend static site (playbook B12).
+#
+# IMPORTANT: Your existing services were created in the dashboard. Syncing this
+# Blueprint with a different service name would create a NEW service. Either:
+#   (a) set `name` below to your exact existing static-site name before syncing, or
+#   (b) skip the Blueprint and copy the headers into
+#       Dashboard → your Static Site → Settings → Headers (path: /*).
+#
+# If you change the backend URL, update `connect-src` in the CSP.
+services:
+  - type: web
+    runtime: static
+    name: notepad-frontend
+    rootDir: Frontend/note-app
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /*
+        name: Content-Security-Policy
+        value: "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://notepadbyunli.onrender.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+      - path: /*
+        name: Strict-Transport-Security
+        value: max-age=31536000; includeSubDomains
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - path: /*
+        name: Permissions-Policy
+        value: camera=(), microphone=(), geolocation=(), payment=()

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /home
+Disallow: /login
+Disallow: /signup
+
+Sitemap: https://notepad-24hm.onrender.com/sitemap.xml

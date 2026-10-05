@@ -6,18 +6,23 @@ const ShortcutsModal = ({ isOpen, onClose }) => {
 
   const shortcuts = [
     { key: "Ctrl + K / /", desc: "Focus search bar" },
-    { key: "Ctrl + N", desc: "Create a new note" },
+    { key: "Alt + N", desc: "Create a new note" },
     { key: "Ctrl + Enter", desc: "Save note (in editor)" },
+    { key: "Ctrl + D", desc: "Insert timestamp (in editor)" },
     { key: "Esc", desc: "Close modal or clear search" },
-    { key: "Ctrl + D", desc: "Insert current date/time (in editor)" },
-    { key: "Ctrl + Shift + D", desc: "Toggle Dark / Light Mode" },
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-fade-in">
-      <div className="relative w-full max-w-md bg-white rounded-3xl border border-slate-200/80 p-6 overflow-hidden">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="shortcuts-modal-title"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-fade-in"
+    >
+      <div className="relative w-full max-w-md bg-white rounded-3xl border border-slate-200/80 p-6 overflow-hidden shadow-xl">
         <button
           onClick={onClose}
+          aria-label="Close keyboard shortcuts"
           className="absolute top-4 right-4 p-1.5 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
         >
           <FiX className="text-lg" />
@@ -28,7 +33,7 @@ const ShortcutsModal = ({ isOpen, onClose }) => {
             <FiCommand className="text-xl" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-slate-900">
+            <h3 id="shortcuts-modal-title" className="text-base font-bold text-slate-900">
               Keyboard Shortcuts
             </h3>
             <p className="text-xs text-slate-400">
@@ -55,7 +60,7 @@ const ShortcutsModal = ({ isOpen, onClose }) => {
 
         <button
           onClick={onClose}
-          className="w-full mt-6 py-2.5 bg-blue-600 text-white text-xs font-semibold rounded-xl hover:bg-blue-700 transition-all"
+          className="w-full mt-6 py-2.5 bg-blue-600 text-white text-xs font-semibold rounded-xl hover:bg-blue-700 transition-all cursor-pointer"
         >
           Got it
         </button>

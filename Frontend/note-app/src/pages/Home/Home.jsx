@@ -82,8 +82,8 @@ const Home = () => {
         if (searchInputRef.current) searchInputRef.current.focus();
       }
 
-      // Ctrl + N to create new note
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "n" && !isInput) {
+      // Alt + N (or Ctrl + Alt + N) to create new note without browser shortcut collision
+      if ((e.altKey || (e.ctrlKey && e.altKey)) && e.key.toLowerCase() === "n" && !isInput) {
         e.preventDefault();
         setOpenAddEditModal({ isShown: true, type: "add", data: null });
       }
@@ -469,8 +469,8 @@ const Home = () => {
           setOpenAddEditModal({ isShown: true, type: "add", data: null });
         }}
         className="fixed bottom-6 right-6 md:bottom-8 md:right-8 w-14 h-14 md:w-16 md:h-16 bg-gradient-to-tr from-blue-600 to-indigo-600 text-white rounded-2xl flex items-center justify-center hover: transition-all z-40 group"
-        aria-label="Create note (Ctrl + N)"
-        title="Create new note (Ctrl + N)"
+        aria-label="Create note (Alt + N)"
+        title="Create new note (Alt + N)"
       >
         <MdAdd className="text-3xl sm:text-4xl transition-transform duration-300" />
       </button>
