@@ -5,23 +5,27 @@ import nodemailer from "nodemailer";
  * Supports Gmail, Brevo, or generic SMTP out-of-the-box at zero cost.
  */
 const createTransporter = () => {
-  const host = process.env.SMTP_HOST || (process.env.EMAIL_SERVICE === "gmail" ? "smtp.gmail.com" : null);
-  const user = process.env.EMAIL_USER;
-  const pass = process.env.EMAIL_PASS;
+  const isGmail =
+    process.env.EMAIL_SERVICE === "gmail" ||
+    (!process.env.SMTP_HOST && process.env.EMAIL_USER?.includes("@gmail.com"));
+  const user = process.env.EMAIL_USER?.trim();
+  const rawPass = process.env.EMAIL_PASS?.trim();
+  // Strip whitespace from Gmail app passwords (e.g. 'xxxx xxxx xxxx xxxx')
+  const pass = isGmail ? rawPass?.replace(/\s+/g, "") : rawPass;
 
   if (user && pass) {
-    if (host) {
+    if (isGmail && !process.env.SMTP_HOST) {
       return nodemailer.createTransport({
-        host,
-        port: parseInt(process.env.SMTP_PORT || "587", 10),
-        secure: process.env.SMTP_SECURE === "true",
+        service: "gmail",
         auth: { user, pass },
       });
     }
 
-    // Default to Gmail service if user/pass are provided without explicit host
+    const host = process.env.SMTP_HOST || "smtp.gmail.com";
     return nodemailer.createTransport({
-      service: "gmail",
+      host,
+      port: parseInt(process.env.SMTP_PORT || "587", 10),
+      secure: process.env.SMTP_SECURE === "true",
       auth: { user, pass },
     });
   }

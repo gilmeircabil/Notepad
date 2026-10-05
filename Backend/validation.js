@@ -35,8 +35,82 @@ const validateEmailField = (email) => {
   return { value };
 };
 
+// Popular disposable / temporary burner email domains to prevent spam accounts
+const DISPOSABLE_DOMAINS = new Set([
+  "10minutemail.com",
+  "10minutemail.net",
+  "guerrillamail.com",
+  "guerrillamail.net",
+  "guerrillamail.org",
+  "guerrillamailblock.com",
+  "sharklasers.com",
+  "grr.la",
+  "mailinator.com",
+  "tempmail.com",
+  "temp-mail.org",
+  "tempmail.net",
+  "throwawaymail.com",
+  "yopmail.com",
+  "yopmail.net",
+  "trashmail.com",
+  "trashmail.net",
+  "dispostable.com",
+  "getairmail.com",
+  "nada.ltd",
+  "mohmal.im",
+  "mohmal.in",
+  "crazymailing.com",
+  "mytemp.email",
+  "fakeinbox.com",
+  "burnermail.io",
+]);
+
+/**
+ * Normalizes an email address for duplicate prevention.
+ * - For Gmail/Googlemail: removes dots and drops "+anything" sub-addressing.
+ * - For other domains: drops "+anything" sub-addressing.
+ * E.g., "u.s.e.r+spam1@gmail.com" -> "user@gmail.com"
+ */
+export const normalizeEmail = (rawEmail = "") => {
+  if (typeof rawEmail !== "string") return "";
+  const trimmed = rawEmail.trim().toLowerCase();
+  const atIndex = trimmed.indexOf("@");
+  if (atIndex === -1) return trimmed;
+
+  let local = trimmed.slice(0, atIndex);
+  let domain = trimmed.slice(atIndex + 1);
+
+  if (domain === "googlemail.com") {
+    domain = "gmail.com";
+  }
+
+  if (domain === "gmail.com") {
+    local = local.replace(/\./g, "");
+  }
+
+  const plusIndex = local.indexOf("+");
+  if (plusIndex !== -1) {
+    local = local.slice(0, plusIndex);
+  }
+
+  return `${local}@${domain}`;
+};
+
+export const isDisposableEmail = (rawEmail = "") => {
+  if (typeof rawEmail !== "string") return false;
+  const atIndex = rawEmail.indexOf("@");
+  if (atIndex === -1) return false;
+  const domain = rawEmail.slice(atIndex + 1).toLowerCase().trim();
+  return DISPOSABLE_DOMAINS.has(domain);
+};
+
 export const validateSignup = (body = {}) => {
-  const { fullName, email, password } = body;
+  const { fullName, email, password, website } = body;
+
+  // Honeypot check: automated bots fill out hidden fields
+  if (website && typeof website === "string" && website.trim().length > 0) {
+    return { error: "Bot detected. Registration rejected." };
+  }
 
   if (!isNonEmptyString(fullName) || !isNonEmptyString(email) || typeof password !== "string" || !password) {
     return { error: "All fields are required" };
@@ -50,6 +124,12 @@ export const validateSignup = (body = {}) => {
   const emailResult = validateEmailField(email);
   if (emailResult.error) return emailResult;
 
+  if (isDisposableEmail(emailResult.value)) {
+    return {
+      error: "Disposable or temporary email addresses are not allowed. Please use a permanent email.",
+    };
+  }
+
   if (password.length < LIMITS.PASSWORD_MIN) {
     return { error: `Password must be at least ${LIMITS.PASSWORD_MIN} characters` };
   }
@@ -57,7 +137,16 @@ export const validateSignup = (body = {}) => {
     return { error: `Password must be at most ${LIMITS.PASSWORD_MAX} characters` };
   }
 
-  return { value: { fullName: name, email: emailResult.value, password } };
+  const normalized = normalizeEmail(emailResult.value);
+
+  return {
+    value: {
+      fullName: name,
+      email: emailResult.value,
+      normalizedEmail: normalized,
+      password,
+    },
+  };
 };
 
 export const validateLogin = (body = {}) => {

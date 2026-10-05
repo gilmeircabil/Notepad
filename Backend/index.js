@@ -20,6 +20,7 @@ import {
   validateNote,
   isValidObjectId,
   sanitizeSearchQuery,
+  normalizeEmail,
 } from "./validation.js";
 import { sendPasswordResetEmail } from "./email.js";
 
@@ -48,6 +49,13 @@ app.disable("x-powered-by");
 // Security headers for the JSON API (CSP, HSTS, nosniff, frame protection…).
 // CORP is relaxed because cross-origin access is governed by CORS below.
 app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }));
+app.use((req, res, next) => {
+  res.setHeader(
+    "Permissions-Policy",
+    "camera=(), microphone=(), geolocation=(), payment=()"
+  );
+  next();
+});
 
 app.use(express.json({ limit: "100kb" }));
 app.use(cookieParser());
@@ -67,6 +75,18 @@ const authLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: true, message: "Too many authentication attempts. Please wait 15 minutes." },
+});
+
+// Dedicated strict rate limiter for account creation to prevent spam floods ($0 cost)
+const signupLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour window
+  max: parseInt(process.env.RATE_LIMIT_SIGNUP_MAX || "5", 10), // Max 5 signups per hour per IP
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    error: true,
+    message: "Too many accounts created from this IP address. Please wait an hour before trying again.",
+  },
 });
 
 app.use(globalLimiter);
@@ -124,23 +144,30 @@ app.get("/", (req, res) => {
 });
 
 // REGISTER
-app.post("/create-account", authLimiter, async (req, res) => {
+app.post("/create-account", signupLimiter, async (req, res) => {
   try {
     const { error, value } = validateSignup(req.body);
     if (error) {
       return res.status(400).json({ error: true, message: error });
     }
-    const { fullName, email, password } = value;
+    const { fullName, email, normalizedEmail, password } = value;
 
-    const exists = await User.findOne({ email });
+    // Check both exact email and normalized canonical email (blocks Gmail +tag and dot spamming)
+    const exists = await User.findOne({
+      $or: [{ email }, { normalizedEmail }],
+    });
     if (exists) {
-      return res.status(400).json({ error: true, message: "User already exists with this email" });
+      return res.status(400).json({
+        error: true,
+        message: "An account with this email address already exists",
+      });
     }
 
     const hashed = await bcrypt.hash(password, 10);
     const user = await User.create({
       fullName,
       email,
+      normalizedEmail,
       password: hashed,
     });
 
@@ -168,8 +195,11 @@ app.post("/login", authLimiter, async (req, res) => {
       return res.status(400).json({ error: true, message: error });
     }
     const { email, password } = value;
+    const normalized = normalizeEmail(email);
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({
+      $or: [{ email }, { normalizedEmail: normalized }],
+    });
     // Always run bcrypt so response time doesn't reveal whether the email exists.
     const match = await bcrypt.compare(password, user ? user.password : DUMMY_PASSWORD_HASH);
 
@@ -209,8 +239,11 @@ app.post("/forgot-password", authLimiter, async (req, res) => {
       return res.status(400).json({ error: true, message: error });
     }
     const { email } = value;
+    const normalized = normalizeEmail(email);
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({
+      $or: [{ email }, { normalizedEmail: normalized }],
+    });
     if (user) {
       // 32-byte cryptographic random token (64 hex characters)
       const rawToken = crypto.randomBytes(32).toString("hex");

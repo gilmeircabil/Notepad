@@ -10,6 +10,7 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [website, setWebsite] = useState(""); // Anti-spam honeypot
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -56,6 +57,7 @@ const Signup = () => {
         fullName: name.trim(),
         email: email.trim().toLowerCase(),
         password,
+        website, // Honeypot (empty for real humans, populated by bots)
       });
 
       if (response.data?.accessToken) {
@@ -98,6 +100,20 @@ const Signup = () => {
 
             {/* Form */}
             <form onSubmit={handleSignup} className="space-y-4">
+              {/* Anti-spam Honeypot: Hidden from real humans, auto-filled by spam bots */}
+              <div style={{ display: "none" }} aria-hidden="true">
+                <label htmlFor="signup-website">Leave blank</label>
+                <input
+                  id="signup-website"
+                  name="website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                />
+              </div>
+
               <div>
                 <label
                   htmlFor="signup-name"
