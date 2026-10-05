@@ -47,17 +47,17 @@ const ForgotPassword = () => {
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="w-full max-w-md relative z-10">
-          <div className="bg-white rounded-3xl border border-slate-200/80 p-7 sm:p-10 animate-fade-in shadow-sm">
+          <div className="bg-white rounded-3xl border border-slate-200/70 p-7 sm:p-10 animate-fade-in shadow-xl shadow-slate-900/5">
             {/* Header */}
             <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 mb-3 shadow-inner">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 mb-3 shadow-sm">
                 {isSubmitted ? (
                   <FiCheckCircle className="text-2xl text-emerald-600" />
                 ) : (
                   <FiKey className="text-2xl" />
                 )}
               </div>
-              <h1 className="text-2xl font-bold text-slate-900">
+              <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
                 {isSubmitted ? "Check your email" : "Forgot Password?"}
               </h1>
               <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
@@ -89,7 +89,7 @@ const ForgotPassword = () => {
                       setIsSubmitted(false);
                       setEmail("");
                     }}
-                    className="text-xs text-slate-500 hover:text-blue-600 transition-colors"
+                    className="text-xs text-slate-500 hover:text-slate-800 transition-colors cursor-pointer"
                   >
                     Didn't get the email? Try again
                   </button>
@@ -97,7 +97,7 @@ const ForgotPassword = () => {
                   <div>
                     <Link
                       to="/login"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:underline"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700 hover:underline"
                     >
                       Return to Sign In
                     </Link>
@@ -109,7 +109,7 @@ const ForgotPassword = () => {
                 <div>
                   <label
                     htmlFor="forgot-email"
-                    className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 ml-1"
+                    className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 ml-1 select-none"
                   >
                     Account Email
                   </label>
@@ -120,7 +120,7 @@ const ForgotPassword = () => {
                     placeholder="name@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full text-xs sm:text-sm bg-slate-50 border border-slate-200/80 rounded-xl px-4 py-3 outline-none focus:bg-white focus:border-blue-500 transition-all text-slate-800 placeholder:text-slate-400"
+                    className="w-full text-xs sm:text-sm bg-slate-50/70 border border-slate-200/70 rounded-xl px-4 py-3 outline-none focus:bg-white focus:border-blue-500/50 focus:ring-3 focus:ring-blue-500/10 transition-all text-slate-800 placeholder:text-slate-400"
                   />
                 </div>
 
@@ -135,7 +135,7 @@ const ForgotPassword = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-semibold py-3.5 rounded-xl transition-all text-xs sm:text-sm flex items-center justify-center gap-2 mt-2 cursor-pointer"
+                  className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-semibold py-3.5 rounded-xl shadow-sm transition-colors text-xs sm:text-sm flex items-center justify-center gap-2 mt-2 cursor-pointer active:translate-y-0.5"
                 >
                   {isLoading ? (
                     <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

@@ -65,16 +65,16 @@ const Login = () => {
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="w-full max-w-md relative z-10">
-          <div className="bg-white rounded-3xl border border-slate-200/80 p-7 sm:p-10 animate-fade-in shadow-sm">
+          <div className="bg-white rounded-3xl border border-slate-200/70 p-7 sm:p-10 animate-fade-in shadow-xl shadow-slate-900/5">
             {/* Header */}
             <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 mb-3 shadow-inner">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 mb-3 shadow-sm">
                 <FiLock className="text-2xl" />
               </div>
-              <h1 className="text-2xl font-bold text-slate-900">
+              <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
                 Welcome back
               </h1>
-              <p className="text-xs sm:text-sm text-slate-400 mt-1.5">
+              <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
                 Sign in to manage and organize your personal notes
               </p>
             </div>
@@ -84,7 +84,7 @@ const Login = () => {
               <div>
                 <label
                   htmlFor="login-email"
-                  className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 ml-1"
+                  className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 ml-1 select-none"
                 >
                   Email Address
                 </label>
@@ -97,7 +97,7 @@ const Login = () => {
                     placeholder="name@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full text-xs sm:text-sm bg-slate-50 border border-slate-200/80 rounded-xl px-4 py-3 outline-none focus:bg-white focus:border-blue-500 transition-all text-slate-800 placeholder:text-slate-400"
+                    className="w-full text-xs sm:text-sm bg-slate-50/70 border border-slate-200/70 rounded-xl px-4 py-3 outline-none focus:bg-white focus:border-blue-500/50 focus:ring-3 focus:ring-blue-500/10 transition-all text-slate-800 placeholder:text-slate-400"
                   />
                 </div>
               </div>
@@ -106,13 +106,13 @@ const Login = () => {
                 <div className="flex items-center justify-between mb-1.5 ml-1">
                   <label
                     htmlFor="login-password"
-                    className="block text-[11px] font-bold uppercase tracking-wider text-slate-400"
+                    className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 select-none"
                   >
                     Password
                   </label>
                   <Link
                     to="/forgot-password"
-                    className="text-[11px] font-semibold text-blue-600 hover:underline"
+                    className="text-[11px] font-semibold text-blue-600 hover:text-blue-700 hover:underline"
                   >
                     Forgot password?
                   </Link>
@@ -138,7 +138,7 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-semibold py-3.5 rounded-xl transition-all text-xs sm:text-sm flex items-center justify-center gap-2 mt-2 cursor-pointer"
+                className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-semibold py-3.5 rounded-xl shadow-sm transition-colors text-xs sm:text-sm flex items-center justify-center gap-2 mt-2 cursor-pointer active:translate-y-0.5"
               >
                 {isLoading ? (
                   <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

@@ -12,7 +12,7 @@ import DeleteConfirmModal from "../../components/DeleteConfirmModal/DeleteConfir
 import ShortcutsModal from "../../components/ShortcutsModal/ShortcutsModal";
 import SkeletonLoader from "../../components/SkeletonLoader/SkeletonLoader";
 import { MdAdd, MdPushPin } from "react-icons/md";
-import { FiSliders, FiArrowDown, FiArrowUp, FiCheckCircle } from "react-icons/fi";
+import { FiSliders, FiX } from "react-icons/fi";
 
 Modal.setAppElement("#root");
 
@@ -321,6 +321,14 @@ const Home = () => {
     [allNotes]
   );
 
+  const hasActiveFilters = Boolean(searchQuery.trim() || selectedTag || activeFilter !== "all");
+
+  const clearAllFilters = () => {
+    setSearchQuery("");
+    setSelectedTag(null);
+    setActiveFilter("all");
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 transition-colors">
       {/* Top Navbar */}
@@ -355,14 +363,14 @@ const Home = () => {
 
             {/* Sort Dropdown */}
             <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
-              <label className="text-xs font-semibold text-slate-400 flex items-center gap-1">
+              <label className="text-xs font-semibold text-slate-400 flex items-center gap-1 select-none">
                 <FiSliders className="text-xs" />
                 <span>Sort:</span>
               </label>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="text-xs font-medium bg-white text-slate-700 border border-slate-200/80 rounded-xl px-2.5 py-1.5 outline-none focus:border-blue-500 transition-colors cursor-pointer"
+                className="text-xs font-medium bg-white text-slate-700 border border-slate-200/70 rounded-xl px-2.5 py-1.5 outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/10 transition-colors cursor-pointer"
               >
                 <option value="updated-desc">Recently Updated</option>
                 <option value="created-desc">Newest First</option>
@@ -374,6 +382,33 @@ const Home = () => {
           </div>
         )}
 
+        {/* Filter Feedback Bar when filtering/searching */}
+        {hasActiveFilters && allNotes.length > 0 && (
+          <div className="mb-5 flex items-center justify-between px-3.5 py-2 bg-slate-100/70 border border-slate-200/60 rounded-xl text-xs text-slate-600 animate-fade-in">
+            <div className="flex items-center gap-2">
+              <span>
+                Showing <strong>{processedNotes.length}</strong> of {allNotes.length} notes
+                {searchQuery.trim() && (
+                  <span> matching "<strong>{searchQuery}</strong>"</span>
+                )}
+                {selectedTag && (
+                  <span> tagged with "<strong>#{selectedTag}</strong>"</span>
+                )}
+                {activeFilter === "pinned" && (
+                  <span> (pinned only)</span>
+                )}
+              </span>
+            </div>
+            <button
+              onClick={clearAllFilters}
+              className="inline-flex items-center gap-1 text-[11px] font-semibold text-blue-600 hover:text-blue-800 transition-colors cursor-pointer"
+            >
+              <FiX className="text-xs" />
+              <span>Reset filter</span>
+            </button>
+          </div>
+        )}
+
         {/* Content Section */}
         {isLoading ? (
           <SkeletonLoader count={6} viewMode={viewMode} />
@@ -382,9 +417,9 @@ const Home = () => {
             {/* PINNED NOTES SECTION */}
             {pinnedNotes.length > 0 && (
               <section>
-                <div className="flex items-center gap-2 mb-3 select-none">
-                  <MdPushPin className="text-amber-500 text-base" />
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                <div className="flex items-center gap-1.5 mb-3 select-none">
+                  <MdPushPin className="text-amber-500 text-sm" />
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
                     PINNED ({pinnedNotes.length})
                   </h3>
                 </div>
@@ -418,8 +453,8 @@ const Home = () => {
             {otherNotes.length > 0 && (
               <section>
                 {pinnedNotes.length > 0 && (
-                  <div className="flex items-center gap-2 mb-3 select-none">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  <div className="flex items-center gap-1.5 mb-3 select-none">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
                       OTHER NOTES ({otherNotes.length})
                     </h3>
                   </div>
@@ -455,11 +490,7 @@ const Home = () => {
           <EmptyCard
             isSearch={Boolean(searchQuery.trim() || selectedTag)}
             searchQuery={searchQuery || selectedTag}
-            onClearSearch={() => {
-              setSearchQuery("");
-              setSelectedTag(null);
-              setActiveFilter("all");
-            }}
+            onClearSearch={clearAllFilters}
             onOpenAddModal={() =>
               setOpenAddEditModal({ isShown: true, type: "add", data: null })
             }
@@ -468,16 +499,16 @@ const Home = () => {
         )}
       </main>
 
-      {/* Floating Action Button (FAB) */}
+      {/* Floating Action Button (FAB) - Eye-Comfort Design (No Jittery Scale Pops) */}
       <button
         onClick={() => {
           setOpenAddEditModal({ isShown: true, type: "add", data: null });
         }}
-        className="fixed bottom-6 right-6 md:bottom-8 md:right-8 w-14 h-14 md:w-16 md:h-16 bg-gradient-to-tr from-blue-600 to-indigo-600 text-white rounded-2xl flex items-center justify-center hover:scale-105 shadow-lg hover:shadow-xl transition-all z-40 group cursor-pointer"
+        className="fixed bottom-6 right-6 md:bottom-8 md:right-8 w-13 h-13 md:w-14 md:h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl flex items-center justify-center shadow-md shadow-blue-600/25 active:translate-y-0.5 transition-colors z-40 cursor-pointer"
         aria-label="Create note (Alt + N)"
         title="Create new note (Alt + N)"
       >
-        <MdAdd className="text-3xl sm:text-4xl transition-transform duration-300" />
+        <MdAdd className="text-2xl sm:text-3xl" />
       </button>
 
       {/* Add / Edit Note Modal */}
@@ -488,12 +519,12 @@ const Home = () => {
         }}
         style={{
           overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.6)",
+            backgroundColor: "rgba(15, 23, 42, 0.45)",
             backdropFilter: "blur(6px)",
             zIndex: 1000,
           },
         }}
-        className="w-[94%] sm:w-[85%] md:w-[70%] lg:w-[48%] max-h-[92vh] bg-white rounded-3xl mx-auto mt-[4vh] p-6 sm:p-7 border border-slate-200/80 overflow-y-auto outline-none animate-fade-in"
+        className="w-[94%] sm:w-[85%] md:w-[70%] lg:w-[48%] max-h-[92vh] bg-white rounded-3xl mx-auto mt-[4vh] p-6 sm:p-7 border border-slate-200/70 shadow-2xl shadow-slate-950/10 overflow-y-auto outline-none animate-fade-in"
       >
         <AddEditNotes
           type={openAddEditModal.type}

@@ -63,21 +63,21 @@ const Navbar = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/85 border-b border-slate-200/80 transition-colors">
+    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/90 border-b border-slate-200/70 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3 sm:gap-6">
         {/* Brand Logo */}
         <div
           onClick={() => navigate("/home")}
-          className="flex items-center gap-2.5 cursor-pointer shrink-0 group select-none"
+          className="flex items-center gap-2.5 cursor-pointer shrink-0 select-none"
         >
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white group-hover:scale-105 transition-transform">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-sm shadow-blue-500/20">
             <FiEdit3 className="text-lg" />
           </div>
           <div className="flex flex-col">
             <span className="text-base sm:text-lg font-bold tracking-tight text-slate-900 leading-none">
               Note<span className="text-blue-600">Pad</span>
             </span>
-            <span className="text-[10px] font-medium text-slate-400 hidden sm:block tracking-wide">
+            <span className="text-[10px] font-medium text-slate-400 hidden sm:block tracking-wide mt-0.5">
               THOUGHTS & TASKS
             </span>
           </div>
@@ -101,7 +101,7 @@ const Navbar = ({
           {userInfo && onToggleViewMode && (
             <button
               onClick={onToggleViewMode}
-              className="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-colors hidden sm:flex items-center justify-center"
+              className="p-2 text-slate-400 hover:text-slate-700 hover:bg-black/5 rounded-xl transition-colors hidden sm:flex items-center justify-center"
               title={viewMode === "grid" ? "Switch to List View" : "Switch to Grid View"}
               aria-label="Toggle view mode"
             >
@@ -112,8 +112,6 @@ const Navbar = ({
               )}
             </button>
           )}
-
-
 
           {/* User Profile */}
           {userInfo && (

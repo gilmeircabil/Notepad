@@ -7,12 +7,12 @@ const ErrorPage = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-white rounded-3xl border border-slate-200/80 p-8 text-center animate-fade-in shadow-sm">
+      <div className="w-full max-w-md bg-white rounded-3xl border border-slate-200/70 p-8 text-center animate-fade-in shadow-xl shadow-slate-900/5">
         <div className="w-16 h-16 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mx-auto mb-4 ring-8 ring-amber-50/50">
           <FiAlertTriangle className="text-3xl" />
         </div>
 
-        <h1 className="text-xl font-bold text-slate-900">
+        <h1 className="text-xl font-bold text-slate-900 tracking-tight">
           Something went wrong
         </h1>
         <p className="text-xs sm:text-sm text-slate-500 mt-2 leading-relaxed">
@@ -20,7 +20,7 @@ const ErrorPage = () => {
         </p>
 
         {error && (
-          <div className="mt-4 p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-left">
+          <div className="mt-4 p-3 rounded-xl bg-slate-50/80 border border-slate-200/70 text-left">
             <p className="text-[11px] font-mono text-slate-600 break-words">
               {error.statusText || error.message || "Unknown Application Error"}
             </p>
@@ -30,14 +30,14 @@ const ErrorPage = () => {
         <div className="mt-6 flex flex-col sm:flex-row gap-2.5">
           <button
             onClick={() => window.location.reload()}
-            className="flex-1 inline-flex items-center justify-center gap-2 py-3 px-4 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors"
+            className="flex-1 inline-flex items-center justify-center gap-2 py-3 px-4 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200/80 rounded-xl transition-colors cursor-pointer"
           >
             <FiRefreshCw className="text-sm" />
             <span>Reload Page</span>
           </button>
           <Link
             to="/home"
-            className="flex-1 inline-flex items-center justify-center gap-2 py-3 px-4 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-all"
+            className="flex-1 inline-flex items-center justify-center gap-2 py-3 px-4 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-sm transition-colors active:translate-y-0.5 cursor-pointer"
           >
             <FiHome className="text-sm" />
             <span>Go Home</span>

@@ -5,7 +5,7 @@ import { FiArrowLeft, FiShield } from "react-icons/fi";
 const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto bg-white rounded-3xl border border-slate-200/80 p-8 sm:p-12 shadow-sm animate-fade-in">
+      <div className="max-w-3xl mx-auto bg-white rounded-3xl border border-slate-200/70 p-8 sm:p-12 shadow-xl shadow-slate-900/5 animate-fade-in">
         <Link
           to="/"
           className="inline-flex items-center gap-2 text-xs font-semibold text-blue-600 hover:text-blue-700 mb-6 transition-colors"
@@ -15,11 +15,11 @@ const PrivacyPolicy = () => {
         </Link>
 
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shadow-sm">
             <FiShield className="text-xl" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-slate-900">Privacy Policy</h1>
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Privacy Policy</h1>
             <p className="text-xs text-slate-400">Last updated: October 5, 2026</p>
           </div>
         </div>

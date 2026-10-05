@@ -46,7 +46,7 @@ const ProfileInfo = ({ userInfo, onLogout, notesCount = 0, onOpenShortcuts }) =>
       <div className="relative" ref={dropdownRef}>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-2.5 p-1 rounded-full hover:bg-slate-100 transition-all focus:outline-none"
+          className="flex items-center gap-2.5 p-1 rounded-full hover:bg-black/5 transition-colors focus:outline-none cursor-pointer"
           aria-label="User menu"
         >
           <div className="relative">
@@ -68,16 +68,16 @@ const ProfileInfo = ({ userInfo, onLogout, notesCount = 0, onOpenShortcuts }) =>
 
         {/* Modern Popover Dropdown Menu */}
         {isOpen && (
-          <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl border border-slate-200/80 p-2 z-50 animate-fade-in text-sm shadow-lg">
+          <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl border border-slate-200/70 p-2 z-50 animate-fade-in text-sm shadow-lg shadow-slate-900/5">
             {/* User Header */}
             <div className="px-3 py-2.5 border-b border-slate-100">
-              <p className="font-semibold text-slate-800 leading-tight">
+              <p className="font-semibold text-slate-900 leading-tight">
                 {userInfo.fullName}
               </p>
               <p className="text-xs text-slate-400 truncate mt-0.5">
                 {userInfo.email}
               </p>
-              <div className="mt-2 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-50 text-blue-700 border border-blue-100">
+              <div className="mt-2 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-50 text-blue-700 border border-blue-100 select-none">
                 {notesCount} {notesCount === 1 ? "Note" : "Notes"} saved
               </div>
             </div>
@@ -90,13 +90,13 @@ const ProfileInfo = ({ userInfo, onLogout, notesCount = 0, onOpenShortcuts }) =>
                     onOpenShortcuts();
                     setIsOpen(false);
                   }}
-                  className="w-full flex items-center justify-between px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 rounded-xl transition-colors"
+                  className="w-full flex items-center justify-between px-3 py-2 text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100/70 rounded-xl transition-colors cursor-pointer"
                 >
                   <span className="flex items-center gap-2">
                     <FiCommand className="text-slate-400 text-sm" />
                     Keyboard Shortcuts
                   </span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-500">
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 font-mono">
                     Ctrl + /
                   </span>
                 </button>
@@ -105,7 +105,7 @@ const ProfileInfo = ({ userInfo, onLogout, notesCount = 0, onOpenShortcuts }) =>
               <Link
                 to="/privacy"
                 onClick={() => setIsOpen(false)}
-                className="w-full flex items-center gap-2 px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 rounded-xl transition-colors"
+                className="w-full flex items-center gap-2 px-3 py-2 text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100/70 rounded-xl transition-colors"
               >
                 <FiShield className="text-slate-400 text-sm" />
                 Privacy Policy
@@ -114,7 +114,7 @@ const ProfileInfo = ({ userInfo, onLogout, notesCount = 0, onOpenShortcuts }) =>
               <Link
                 to="/terms"
                 onClick={() => setIsOpen(false)}
-                className="w-full flex items-center gap-2 px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 rounded-xl transition-colors"
+                className="w-full flex items-center gap-2 px-3 py-2 text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100/70 rounded-xl transition-colors"
               >
                 <FiFileText className="text-slate-400 text-sm" />
                 Terms of Service
@@ -128,7 +128,7 @@ const ProfileInfo = ({ userInfo, onLogout, notesCount = 0, onOpenShortcuts }) =>
                   setIsOpen(false);
                   onLogout();
                 }}
-                className="w-full flex items-center gap-2 px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 rounded-xl transition-colors"
+                className="w-full flex items-center gap-2 px-3 py-2 text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100/70 rounded-xl transition-colors cursor-pointer"
               >
                 <FiLogOut className="text-sm text-slate-500" />
                 Sign Out
@@ -139,7 +139,7 @@ const ProfileInfo = ({ userInfo, onLogout, notesCount = 0, onOpenShortcuts }) =>
                   setIsOpen(false);
                   setShowDeleteModal(true);
                 }}
-                className="w-full flex items-center gap-2 px-3 py-2 text-xs font-medium text-red-600 hover:bg-red-50 rounded-xl transition-colors"
+                className="w-full flex items-center gap-2 px-3 py-2 text-xs font-medium text-rose-600 hover:bg-rose-50/70 rounded-xl transition-colors cursor-pointer"
               >
                 <FiTrash2 className="text-sm" />
                 Delete Account
@@ -152,19 +152,19 @@ const ProfileInfo = ({ userInfo, onLogout, notesCount = 0, onOpenShortcuts }) =>
       {/* Delete Account Confirmation Modal (GDPR / Privacy Compliance) */}
       {showDeleteModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-fade-in">
-          <div className="relative w-full max-w-sm bg-white rounded-3xl border border-slate-200/80 p-6 overflow-hidden shadow-xl">
+          <div className="relative w-full max-w-sm bg-white rounded-3xl border border-slate-200/70 p-6 overflow-hidden shadow-xl">
             <button
               onClick={() => setShowDeleteModal(false)}
-              className="absolute top-4 right-4 p-1.5 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+              className="absolute top-4 right-4 p-1.5 rounded-full text-slate-400 hover:text-slate-700 hover:bg-black/5 transition-colors cursor-pointer"
             >
               <FiX className="text-lg" />
             </button>
 
-            <div className="w-12 h-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center mb-4 ring-8 ring-red-50/50">
+            <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mb-4 ring-8 ring-rose-50/50">
               <FiAlertTriangle className="text-2xl" />
             </div>
 
-            <h3 className="text-lg font-bold text-slate-900">
+            <h3 className="text-lg font-bold text-slate-900 tracking-tight">
               Delete Account?
             </h3>
             <p className="text-xs text-slate-500 mt-2 leading-relaxed">
@@ -183,7 +183,7 @@ const ProfileInfo = ({ userInfo, onLogout, notesCount = 0, onOpenShortcuts }) =>
                 type="button"
                 disabled={isDeleting}
                 onClick={() => setShowDeleteModal(false)}
-                className="flex-1 py-2.5 px-4 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors"
+                className="flex-1 py-2.5 px-4 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200/80 rounded-xl transition-colors cursor-pointer"
               >
                 Cancel
               </button>
@@ -191,7 +191,7 @@ const ProfileInfo = ({ userInfo, onLogout, notesCount = 0, onOpenShortcuts }) =>
                 type="button"
                 disabled={isDeleting}
                 onClick={handleDeleteAccount}
-                className="flex-1 py-2.5 px-4 text-xs font-semibold text-white bg-red-600 hover:bg-red-700 disabled:opacity-60 rounded-xl transition-all"
+                className="flex-1 py-2.5 px-4 text-xs font-semibold text-white bg-rose-600 hover:bg-rose-700 disabled:opacity-60 rounded-xl shadow-sm transition-colors cursor-pointer active:translate-y-0.5"
               >
                 {isDeleting ? "Deleting..." : "Yes, Delete"}
               </button>

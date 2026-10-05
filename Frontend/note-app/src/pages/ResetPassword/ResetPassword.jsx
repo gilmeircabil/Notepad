@@ -78,17 +78,17 @@ const ResetPassword = () => {
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="w-full max-w-md relative z-10">
-          <div className="bg-white rounded-3xl border border-slate-200/80 p-7 sm:p-10 animate-fade-in shadow-sm">
+          <div className="bg-white rounded-3xl border border-slate-200/70 p-7 sm:p-10 animate-fade-in shadow-xl shadow-slate-900/5">
             {/* Header */}
             <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 mb-3 shadow-inner">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 mb-3 shadow-sm">
                 {isSuccess ? (
                   <FiCheckCircle className="text-2xl text-emerald-600" />
                 ) : (
                   <FiLock className="text-2xl" />
                 )}
               </div>
-              <h1 className="text-2xl font-bold text-slate-900">
+              <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
                 {isSuccess ? "Password Reset Complete" : "Choose New Password"}
               </h1>
               <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
@@ -102,7 +102,7 @@ const ResetPassword = () => {
               <div className="space-y-4">
                 <button
                   onClick={() => navigate("/login")}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3.5 rounded-xl transition-all text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3.5 rounded-xl shadow-sm transition-colors text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5"
                 >
                   <span>Go to Sign In</span>
                   <FiArrowRight className="text-base" />
@@ -113,7 +113,7 @@ const ResetPassword = () => {
                 <div>
                   <label
                     htmlFor="new-password"
-                    className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 ml-1"
+                    className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 ml-1 select-none"
                   >
                     New Password
                   </label>
@@ -154,7 +154,7 @@ const ResetPassword = () => {
                 <div>
                   <label
                     htmlFor="confirm-password"
-                    className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 ml-1"
+                    className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 ml-1 select-none"
                   >
                     Confirm New Password
                   </label>
@@ -189,7 +189,7 @@ const ResetPassword = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-semibold py-3.5 rounded-xl transition-all text-xs sm:text-sm flex items-center justify-center gap-2 mt-2 cursor-pointer"
+                  className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-semibold py-3.5 rounded-xl shadow-sm transition-colors text-xs sm:text-sm flex items-center justify-center gap-2 mt-2 cursor-pointer active:translate-y-0.5"
                 >
                   {isLoading ? (
                     <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
