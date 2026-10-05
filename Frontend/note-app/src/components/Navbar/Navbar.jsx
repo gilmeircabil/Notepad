@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useRef, useEffect } from "react";
 import ProfileInfo from "../Cards/ProfileInfo";
 import Searchbar from "../Searchbar/Searchbar";
 import { useNavigate } from "react-router-dom";
@@ -70,7 +70,7 @@ const Navbar = ({
           onClick={() => navigate("/home")}
           className="flex items-center gap-2.5 cursor-pointer shrink-0 group select-none"
         >
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white group- transition-transform">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white group-hover:scale-105 transition-transform">
             <FiEdit3 className="text-lg" />
           </div>
           <div className="flex flex-col">

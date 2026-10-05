@@ -45,7 +45,7 @@ const NoteCard = ({
   const colorPickerRef = useRef(null);
 
   const colorConfig = getNoteColorConfig(color);
-  const { words, readTimeMin } = getNoteStats(content);
+  const { words } = getNoteStats(content);
 
   // Close color picker on outside click
   useEffect(() => {

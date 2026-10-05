@@ -27,4 +27,7 @@ const NoteSchema = new mongoose.Schema(
   }
 );
 
+// Compound index covering the primary note query: find by user, sorted by pinned and updatedOn
+NoteSchema.index({ userId: 1, isPinned: -1, updatedOn: -1 });
+
 export default mongoose.model("Note", NoteSchema);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useEffect, useState, useRef, useMemo, useCallback } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import NoteCard from "../../components/Cards/NoteCard";
 import TagFilterBar from "../../components/TagFilterBar/TagFilterBar";
@@ -99,7 +99,7 @@ const Home = () => {
     return () => window.removeEventListener("keydown", handleGlobalKeyDown);
   }, []);
 
-  const getUserInfo = async () => {
+  const getUserInfo = useCallback(async () => {
     try {
       const response = await axiosInstance.get("/get-user");
       if (response.data && response.data.user) {
@@ -113,9 +113,9 @@ const Home = () => {
         navigate("/login");
       }
     }
-  };
+  }, [navigate]);
 
-  const getAllNotes = async () => {
+  const getAllNotes = useCallback(async () => {
     try {
       const response = await axiosInstance.get("/get-all-notes");
       if (response.data && response.data.notes) {
@@ -126,7 +126,7 @@ const Home = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   // Edit Note
   const handleEdit = (noteDetails) => {
@@ -149,6 +149,7 @@ const Home = () => {
         getAllNotes();
       }
     } catch (error) {
+      console.error("Delete note error:", error);
       showToastMessage("Failed to delete note", "error");
     }
   };
@@ -216,6 +217,7 @@ const Home = () => {
         getAllNotes();
       }
     } catch (error) {
+      console.error("Duplicate note error:", error);
       showToastMessage("Could not duplicate note", "error");
     }
   };
@@ -237,7 +239,7 @@ const Home = () => {
   useEffect(() => {
     getAllNotes();
     getUserInfo();
-  }, []);
+  }, [getAllNotes, getUserInfo]);
 
   // Compute all distinct tags with counts
   const distinctTags = useMemo(() => {
@@ -471,7 +473,7 @@ const Home = () => {
         onClick={() => {
           setOpenAddEditModal({ isShown: true, type: "add", data: null });
         }}
-        className="fixed bottom-6 right-6 md:bottom-8 md:right-8 w-14 h-14 md:w-16 md:h-16 bg-gradient-to-tr from-blue-600 to-indigo-600 text-white rounded-2xl flex items-center justify-center hover: transition-all z-40 group"
+        className="fixed bottom-6 right-6 md:bottom-8 md:right-8 w-14 h-14 md:w-16 md:h-16 bg-gradient-to-tr from-blue-600 to-indigo-600 text-white rounded-2xl flex items-center justify-center hover:scale-105 shadow-lg hover:shadow-xl transition-all z-40 group cursor-pointer"
         aria-label="Create note (Alt + N)"
         title="Create new note (Alt + N)"
       >

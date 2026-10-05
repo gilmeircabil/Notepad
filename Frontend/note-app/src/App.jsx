@@ -19,6 +19,15 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
+// Public guard — redirects already logged-in users to /home reactively
+const PublicRoute = ({ children }) => {
+  const isAuthenticated = Boolean(localStorage.getItem("userInfo"));
+  if (isAuthenticated) {
+    return <Navigate to="/home" replace />;
+  }
+  return children;
+};
+
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -26,19 +35,35 @@ const routes = createBrowserRouter([
     children: [
       {
         index: true,
-        element: localStorage.getItem("userInfo") ? <Navigate to="/home" replace /> : <Login />,
+        element: (
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        ),
       },
       {
         path: "login",
-        element: localStorage.getItem("userInfo") ? <Navigate to="/home" replace /> : <Login />,
+        element: (
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        ),
       },
       {
         path: "signup",
-        element: localStorage.getItem("userInfo") ? <Navigate to="/home" replace /> : <Signup />,
+        element: (
+          <PublicRoute>
+            <Signup />
+          </PublicRoute>
+        ),
       },
       {
         path: "forgot-password",
-        element: localStorage.getItem("userInfo") ? <Navigate to="/home" replace /> : <ForgotPassword />,
+        element: (
+          <PublicRoute>
+            <ForgotPassword />
+          </PublicRoute>
+        ),
       },
       {
         path: "reset-password/:token",

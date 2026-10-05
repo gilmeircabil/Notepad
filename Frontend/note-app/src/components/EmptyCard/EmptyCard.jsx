@@ -79,7 +79,7 @@ const EmptyCard = ({
             <div
               key={idx}
               onClick={() => onSelectTemplate && onSelectTemplate(tmpl)}
-              className="group p-4 bg-white border border-slate-200/80 hover:border-blue-400 rounded-2xl cursor-pointer hover: transition-all flex flex-col justify-between"
+              className="group p-4 bg-white border border-slate-200/80 hover:border-blue-400 rounded-2xl cursor-pointer hover:shadow-md transition-all flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-1">

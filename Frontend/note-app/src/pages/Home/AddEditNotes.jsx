@@ -22,6 +22,9 @@ const AddEditNotes = ({
 
   const titleInputRef = useRef(null);
   const textareaRef = useRef(null);
+  const handleSaveRef = useRef();
+  const handleInsertRef = useRef();
+  const handleCloseRef = useRef();
 
   // Autofocus title on mount
   useEffect(() => {
@@ -35,19 +38,19 @@ const AddEditNotes = ({
     const handleKeyDown = (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
         e.preventDefault();
-        handleSubmit();
+        handleSaveRef.current?.();
       }
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "d") {
         e.preventDefault();
-        insertSnippet(`\n[${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}] `);
+        handleInsertRef.current?.(`\n[${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}] `);
       }
       if (e.key === "Escape") {
-        onClose();
+        handleCloseRef.current?.();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [title, content, tags, color, isPinned]);
+  }, []);
 
   const { words, chars } = getNoteStats(content);
 
@@ -132,6 +135,10 @@ const AddEditNotes = ({
       addNewNote();
     }
   };
+
+  handleSaveRef.current = handleSubmit;
+  handleInsertRef.current = insertSnippet;
+  handleCloseRef.current = onClose;
 
   return (
     <div className="flex flex-col h-full text-slate-800">
